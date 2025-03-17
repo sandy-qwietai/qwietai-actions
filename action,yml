@@ -1,0 +1,12 @@
+name: "Qwiet AI Security Scan"
+description: "Reusable workflow for Qwiet AI preZero static analysis"
+author: "Sandeep Jha"
+branding:
+  icon: "shield"
+  color: "blue"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Call Qwiet AI Workflow
+      uses: sandy-qwietai/qwietai-actions/.github/workflows/shiftleft.yml@main
