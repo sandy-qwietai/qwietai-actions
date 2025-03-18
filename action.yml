@@ -10,11 +10,6 @@ inputs:
     description: "Application name for Qwiet AI"
     required: true
 
-secrets:
-  SHIFTLEFT_ACCESS_TOKEN:
-    description: "API token for Qwiet AI"
-    required: true
-
 runs:
   using: "composite"
   steps:
