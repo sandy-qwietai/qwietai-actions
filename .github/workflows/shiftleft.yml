@@ -10,10 +10,10 @@ jobs:
     steps:
       - name: Checkout repository  # This is necessary to access your code
         uses: actions/checkout@v3
-        
+
       - name: Run Qwiet AI Scan
         uses: sandy-qwietai/qwietai-actions@main
         with:
           app_name: "your-app-name"
-        secrets:
+        env:
           SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
