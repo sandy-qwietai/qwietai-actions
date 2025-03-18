@@ -27,6 +27,6 @@ runs:
           --pythonsrc $(pwd)
       shell: bash
       env:
-        SHIFTLEFT_API_HOST: www.shiftleft.io
-        SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.shiftleft.io:443
-        SHIFTLEFT_GRPC_API_HOST: api.shiftleft.io:443
+        SHIFTLEFT_API_HOST: www-ext.stg.shiftleft.io
+        SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.stg.shiftleft.io:443
+        SHIFTLEFT_GRPC_API_HOST: api-ext.stg.shiftleft.io:443
