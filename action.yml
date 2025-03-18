@@ -1,12 +1,38 @@
-name: "Qwiet AI Security Scan"
-description: "Reusable workflow for Qwiet AI preZero static analysis"
-author: "Sandeep Jha"
+name: "Qwiet AI Static Analysis"
+description: "Run preZero static analysis using Qwiet AI's ShiftLeft CLI."
+author: "Your Name"
 branding:
   icon: "shield"
   color: "blue"
 
+inputs:
+  app_name:
+    description: "Application name for Qwiet AI"
+    required: true
+
+secrets:
+  SHIFTLEFT_ACCESS_TOKEN:
+    description: "API token for Qwiet AI"
+    required: true
+
 runs:
   using: "composite"
   steps:
-    - name: Call Qwiet AI Workflow
-      uses: sandy-qwietai/qwietai-actions/.github/workflows/shiftleft.yml@main
+    - uses: actions/checkout@v3
+    - name: Download ShiftLeft CLI
+      run: |
+        curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
+      shell: bash
+    - name: Run preZero Static Analysis
+      run: |
+        pip install -r requirements.txt
+        ${GITHUB_WORKSPACE}/sl analyze --strict --wait \
+          --app ${{ inputs.app_name }} \
+          --tag branch=${{ github.head_ref }} \
+          --pythonsrc $(pwd)
+      shell: bash
+      env:
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+        SHIFTLEFT_API_HOST: www.shiftleft.io
+        SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.shiftleft.io:443
+        SHIFTLEFT_GRPC_API_HOST: api.shiftleft.io:443
