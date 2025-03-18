@@ -27,7 +27,6 @@ runs:
           --pythonsrc $(pwd)
       shell: bash
       env:
-        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_API_HOST: www.shiftleft.io
         SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.shiftleft.io:443
         SHIFTLEFT_GRPC_API_HOST: api.shiftleft.io:443
