@@ -17,7 +17,7 @@ runs:
   - name: preZero Static Analysis
     shell: bash
     run: |
-      ./sl analyze --app "${GITHUB_REPOSITORY_OWNER}_${GITHUB_REPOSITORY#*/}" --verbose --strict --wait
+      ./sl analyze --app "${GITHUB_REPOSITORY_OWNER}-${GITHUB_REPOSITORY#*/}" --verbose --strict --wait
     env:
       SHIFTLEFT_API_HOST: www.shiftleft.io
       SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.shiftleft.io:443
@@ -28,7 +28,7 @@ runs:
     run: |
       git clone --branch sandeep/sarif-poc --single-branch https://github.com/ShiftLeftSecurity/field-integrations report
       pip3 install -r report/shiftleft-utils/requirements.txt
-      python3 report/shiftleft-utils/export.py --app "${GITHUB_REPOSITORY_OWNER}_${GITHUB_REPOSITORY#*/}" --format "sarif" --report_file report/qwiet-sarif-report.sarif
+      python3 report/shiftleft-utils/export.py --app "${GITHUB_REPOSITORY_OWNER}-${GITHUB_REPOSITORY#*/}" --format "sarif" --report_file report/qwiet-sarif-report.sarif
       chmod -R 777 report
 
   - name: Debug - List Report Files
@@ -38,5 +38,5 @@ runs:
   - name: Export Sarif Report to GitHub Code Scanning
     uses: github/codeql-action/upload-sarif@v3
     with:
-      sarif_file: report/qwiet-sarif-report-${GITHUB_REPOSITORY_OWNER}_${GITHUB_REPOSITORY#*/}.sarif
+      sarif_file: report/qwiet-sarif-report-${{ github.repository_owner }}-${{ github.event.repository.name }}.sarif
       category: qwiet-prezero
