@@ -13,7 +13,5 @@ jobs:
 
       - name: Run Qwiet AI Scan
         uses: sandy-qwietai/qwietai-actions@main
-        with:
-          app_name: "your-app-name"
         env:
           SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
