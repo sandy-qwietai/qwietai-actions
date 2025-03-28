@@ -1,32 +1,41 @@
 name: "Qwiet AI Static Analysis"
 description: "Run preZero static analysis using Qwiet AI's ShiftLeft CLI."
-author: "Your Name"
+author: "Sandeep Kumar Jha"
 branding:
   icon: "shield"
   color: "blue"
 
-inputs:
-  app_name:
-    description: "Application name for Qwiet AI"
-    required: true
-
 runs:
   using: "composite"
   steps:
+    steps:
     - uses: actions/checkout@v3
     - name: Download ShiftLeft CLI
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
+
+    - name: preZero Static Analysis
       shell: bash
-    - name: Run preZero Static Analysis
       run: |
-        pip install -r requirements.txt
-        ${GITHUB_WORKSPACE}/sl analyze --strict --wait \
-          --app ${{ inputs.app_name }} \
-          --tag branch=${{ github.head_ref }} \
-          --pythonsrc $(pwd)
-      shell: bash
+        ./sl analyze --app "${GITHUB_REPOSITORY_OWNER}_${GITHUB_REPOSITORY#*/}" --verbose --strict --wait
       env:
-        SHIFTLEFT_API_HOST: www-ext.stg.shiftleft.io
-        SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.stg.shiftleft.io:443
-        SHIFTLEFT_GRPC_API_HOST: api-ext.stg.shiftleft.io:443
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+        SHIFTLEFT_API_HOST: www.shiftleft.io
+        SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.shiftleft.io:443
+        SHIFTLEFT_GRPC_API_HOST: api.shiftleft.io:443
+        
+    - name: Generate Sarif Report
+      shell: bash
+      run: |
+        git clone --branch sandeep/sarif-poc --single-branch https://github.com/ShiftLeftSecurity/field-integrations report
+        pip3 install -r report/shiftleft-utils/requirements.txt
+        python3 report/shiftleft-utils/export.py --app ${GITHUB_REPOSITORY_OWNER}_${GITHUB_REPOSITORY#*/}" --format "sarif" --report_file report/qwiet-sarif-report.sarif
+        chmod -R 777 report
+      env:
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+
+    - name: Export Sarif Report to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: report/qwiet-sarif-report-${GITHUB_REPOSITORY_OWNER}_${GITHUB_REPOSITORY#*/}.sarif
+        category: qwiet-prezero
