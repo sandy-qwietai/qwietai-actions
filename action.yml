@@ -5,6 +5,12 @@ branding:
   icon: "shield"
   color: "blue"
 
+inputs:
+  enable_sarif:
+    description: "Enable SARIF report generation and upload (true/false)"
+    required: false
+    default: "true"
+
 runs:
   using: "composite"
   steps:
@@ -24,12 +30,14 @@ runs:
       SHIFTLEFT_GRPC_API_HOST: api.shiftleft.io:443
       
   - name: Generate Sarif Report
+    if: inputs.enable_sarif == 'true'
     shell: bash
     run: |
       chmod +x ${{ github.action_path }}/generate_sarif.sh
       ${{ github.action_path }}/generate_sarif.sh
       
   - name: Export Sarif Report to GitHub Code Scanning
+    if: inputs.enable_sarif == 'true'
     uses: github/codeql-action/upload-sarif@v3
     with:
       sarif_file: report/qwiet-sarif-report-${{ github.repository_owner }}-${{ github.event.repository.name }}.sarif
