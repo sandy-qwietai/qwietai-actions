@@ -13,5 +13,8 @@ jobs:
 
       - name: Run Qwiet AI Scan
         uses: sandy-qwietai/qwietai-actions@main
+        # Uncomment the below block to disable sarif report generation and upload
+        # with:                                  
+        #   enable_sarif: "false"
         env:
           SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
