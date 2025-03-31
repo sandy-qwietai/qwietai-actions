@@ -26,7 +26,7 @@ runs:
   - name: Generate Sarif Report
     shell: bash
     run: |
-      chmod +x generate_sarif.sh
+      chmod +x ${GITHUB_WORKSPACE}/generate_sarif.sh
       ./generate_sarif.sh
       
   - name: Export Sarif Report to GitHub Code Scanning
