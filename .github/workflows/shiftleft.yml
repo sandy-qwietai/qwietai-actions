@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  security-scan:
+  NextGen-Static-Analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository  # This is necessary to access your code
