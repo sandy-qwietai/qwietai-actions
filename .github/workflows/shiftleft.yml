@@ -11,6 +11,23 @@ jobs:
       - name: Checkout repository  # This is necessary to access your code
         uses: actions/checkout@v3
 
+      # --- Setup Development Environment (Modify as needed) ---
+      # Uncomment and customize this step based on your project requirements
+      # - name: Setup Development Environment
+      #   shell: bash
+      #   run: |
+      #     # Example for Python projects
+      #     pip install -r requirements.txt
+
+      #     # Example for Node.js projects
+      #     npm install
+
+      #     # Example for Java projects
+      #     mvn clean install
+
+      #     # Example for .NET projects
+      #     dotnet restore
+
       - name: Run Qwiet AI Scan
         uses: sandy-qwietai/qwietai-actions@main
         # Uncomment the below block to disable sarif report generation and upload
