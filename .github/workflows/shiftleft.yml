@@ -1,4 +1,4 @@
-name: Qwiet AI Scan
+name: Qwiet AI Static Analysis
 
 on:
   pull_request:
