@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e  # Exit on error
 
-# Define default workspace if not set
-# cd "${GITHUB_WORKSPACE}"
-
 # Clone the required repository
 git clone --branch sandeep/sarif-poc --single-branch https://github.com/ShiftLeftSecurity/field-integrations report
 
