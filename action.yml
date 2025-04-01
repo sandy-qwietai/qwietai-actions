@@ -5,11 +5,13 @@ branding:
   icon: "shield"
   color: "blue"
 
-inputs:
-  enable_sarif:
-    description: "Enable SARIF report generation and upload (true/false)"
-    required: false
-    default: "true"
+on:
+  workflow-call:
+    inputs:
+      enable_sarif:
+        description: "Enable SARIF report generation and upload (true/false)"
+        required: false
+        default: "true"
 
 runs:
   using: "composite"
