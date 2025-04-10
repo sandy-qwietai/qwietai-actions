@@ -7,24 +7,32 @@ This guide demonstrates how to integrate [Qwiet AI preZero](https://www.shiftlef
 ## 🚧 Prerequisites
 
 - An existing GitHub repository where you intend to add Qwiet AI preZero for automated code analysis.
-- A [ShiftLeft CI token](https://docs.shiftleft.io/sast/getting-started/authentication#ci-tokens).
+- A ShiftLeft ACCESS TOKEN.
 
 ---
 
-## 🔐 Step 1: Create Repository Secrets
+## 🔑 Step 1: Getting Your Shiftleft Access Token
+
+Every Shiftleft account has this token. Once you [create an account](https://app.shiftleft.io/register), you can find it on the [Organizations](https://app.shiftleft.io/organization/overview) page under the **Overview** tab, as shown in the image below:
+
+ ![SHIFTLEFT ACCESS TOKEN](https://github.com/user-attachments/assets/2f787f0f-957c-4756-91c6-baec87a5af85)
+
+---
+
+## 🔐 Step 2: Create Repository Secrets
 
 GitHub's [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) are encrypted environment variables that protect sensitive information while making them accessible in GitHub Actions workflows. To set up the necessary secret:
 
 1. Navigate to your GitHub repository.
 2. Go to **Settings > Secrets > Actions**.
 3. Click **New repository secret**.
-4. Create a secret named `SHIFTLEFT_ACCESS_TOKEN` and provide the value of your [CI token](https://docs.shiftleft.io/sast/getting-started/authentication#ci-tokens).
+4. Create a secret named `SHIFTLEFT_ACCESS_TOKEN` and provide the value of your **SHIFTLEFT_ACCESS_TOKEN**.
 
 >  💡 **Note:** If you plan to add preZero functionality to multiple repositories, consider creating [encrypted secrets for your organization](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-an-organization) to manage them centrally.
 
 ---
 
-## ⚙️ Step 2: Set Up GitHub Action Workflow
+## ⚙️ Step 3: Set Up GitHub Action Workflow
 
 GitHub [Actions](https://github.com/features/actions) allows you to automate workflows directly within your GitHub repository. To create a new GitHub Action for integrating preZero:
 
