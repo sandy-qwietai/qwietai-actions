@@ -42,3 +42,9 @@ runs:
     with:
       sarif_file: report/qwiet-sarif-report-${{ github.repository_owner }}-${{ github.event.repository.name }}.sarif
       category: qwiet-prezero
+
+  - name: Upload report file
+    uses: actions/upload-artifact@v4
+    with:
+      name: sarif-report
+      path: report/qwiet-sarif-report-${{ github.repository_owner }}-${{ github.event.repository.name }}.sarif
