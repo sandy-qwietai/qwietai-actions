@@ -29,17 +29,11 @@ runs:
       SHIFTLEFT_GRPC_TELEMETRY_HOST: telemetry.shiftleft.io:443
       SHIFTLEFT_GRPC_API_HOST: api.shiftleft.io:443
 
-  - name: Export Sarif Report qwiet ai
+  - name: Generate Sarif Report
+    if: inputs.enable_sarif == 'true'
     shell: bash
     run: |
       ./sl sarif export --app "${GITHUB_REPOSITORY_OWNER}-${GITHUB_REPOSITORY#*/}"
-      
-  # - name: Generate Sarif Report
-  #   if: inputs.enable_sarif == 'true'
-  #   shell: bash
-  #   run: |
-  #     chmod +x ${{ github.action_path }}/generate_sarif.sh
-  #     ${{ github.action_path }}/generate_sarif.sh
       
   - name: Export Sarif Report to GitHub Code Scanning
     if: inputs.enable_sarif == 'true'
@@ -47,9 +41,3 @@ runs:
     with:
       sarif_file: output.sarif
       category: qwiet-prezero
-
-  - name: Upload report file
-    uses: actions/upload-artifact@v4
-    with:
-      name: sarif-report
-      path: output.sarif
